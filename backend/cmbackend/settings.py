@@ -9,8 +9,18 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-
+import os
 from pathlib import Path
+import cloudinary
+
+print(os.environ.get("CLOUD_NAME"),os.environ.get("CLOUD_API_KEY"),os.environ.get("CLOUD_API_SECRET"))
+# check if env values are set
+
+cloudinary.config( 
+  cloud_name = os.environ.get("CLOUD_NAME"), 
+  api_key = os.environ.get("CLOUD_API_KEY"), 
+  api_secret = os.environ.get("CLOUD_API_SECRET") 
+)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,7 +30,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-$ez_oi89&68xjtl5&um-4j&-le_u=y55xn)m*n1c+$=j5^4(-g'
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True

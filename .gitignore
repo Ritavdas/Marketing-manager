@@ -1,2 +1,4 @@
 backend/demo
+backend/.env
+backend/.env.bat
 Path.txt
