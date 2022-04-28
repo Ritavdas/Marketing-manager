@@ -13,7 +13,7 @@ import os
 from pathlib import Path
 import cloudinary
 
-print(os.environ.get("CLOUD_NAME"),os.environ.get("CLOUD_API_KEY"),os.environ.get("CLOUD_API_SECRET"))
+print(os.environ.get("CLOUD_NAME"))
 # check if env values are set
 
 cloudinary.config( 
@@ -41,6 +41,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'campaigns',
     'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',

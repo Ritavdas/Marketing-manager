@@ -14,7 +14,7 @@ class Campaign(models.Model):
     logo = CloudinaryField('Image', overwrite=True, format='jpg')
 
     class Meta:  # How the models behave
-        ordering = ('-created_at')  # will be in descending order
+        ordering = ('-created_at',)  # will be in descending order
 
     def __str__(self):
         return self.title  # showed in Django Admin
@@ -34,3 +34,16 @@ class Campaign(models.Model):
         self.slug = to_assign
 
         super.save(*args, **kwargs)  # sending back to super class
+
+
+class Subscriber(models.Model):
+    campaign = models.ForeignKey(to=Campaign, on_delete=models.CASCADE)
+    email = models.EmailField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:  # How the models behave
+        ordering = ('-created_at',)  # will be in descending order
+
+    def __str__(self):
+        return self.email  # showed in Django Admin
