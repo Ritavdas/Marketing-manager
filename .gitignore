@@ -3,4 +3,4 @@ backend/.env
 backend/.env.bat
 Path.txt
 frontend/node_modules
-backend/campaigns/__pycache__/
+backend/campaigns/__pycache__   
