@@ -13,6 +13,7 @@ import django_heroku
 import os
 from pathlib import Path
 import cloudinary
+import dj_database_url
 
 print(os.environ.get("CLOUD_NAME"))
 # check if env values are set
@@ -100,7 +101,7 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
+DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
