@@ -16,10 +16,10 @@ import cloudinary
 print(os.environ.get("CLOUD_NAME"))
 # check if env values are set
 
-cloudinary.config( 
-  cloud_name = os.environ.get("CLOUD_NAME"), 
-  api_key = os.environ.get("CLOUD_API_KEY"), 
-  api_secret = os.environ.get("CLOUD_API_SECRET") 
+cloudinary.config(
+    cloud_name=os.environ.get("CLOUD_NAME"),
+    api_key=os.environ.get("CLOUD_API_KEY"),
+    api_secret=os.environ.get("CLOUD_API_SECRET")
 )
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -43,6 +43,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'campaigns',
     'drf_yasg',
+    "corsheaders",
     'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -55,6 +56,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -63,6 +65,11 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'cmbackend.urls'
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+]
 
 TEMPLATES = [
     {

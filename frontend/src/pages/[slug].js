@@ -1,20 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Head from "next/head";
 import Link from "next/link";
-// import styles from "../styles/Home.module.css";
+import { FaCheckCircle } from "react-icons/fa";
 import styles from "../styles/Detail.module.css";
 import dateformat from "dateformat";
 
 function Campaign({ data }) {
-  console.log("data : ", data);
+  const [email, setEmail] = useState("");
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const handleOnSubmit = (e) => {
+    e.preventDefault();
 
-  const {
-    query: { slug },
-  } = useRouter();
+    const options = {
+      method: "POST",
+      body: JSON.stringify({
+        email,
+        campaign: data.id,
+      }),
 
-  console.log("router: ", slug);
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    setIsSubmitting(true);
+    fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/subscribe`, options)
+      .then((res) => res.json())
+      .then((response) => setIsSubmitted(true))
+      .catch((error) => console.log("error", error))
+      .finally(() => setIsSubmitting(false));
+  };
+
   return (
     <div>
       <Head>
@@ -39,30 +58,47 @@ function Campaign({ data }) {
               <p className={styles.description}>{data.description}</p>
             </div>
             <div className={styles.right}>
-              <div className={styles.rightContents}>
-                <form>
-                  <div className={styles.formGroup}>
-                    <input
-                      type="email"
-                      required
-                      name="email"
-                      placeholder="Email address"
-                      className={styles.input}
-                    />
+              {!isSubmitted ? (
+                <div className={styles.rightContents}>
+                  <form onSubmit={handleOnSubmit}>
+                    <div className={styles.formGroup}>
+                      <input
+                        onChange={(e) => setEmail(e.target.value)}
+                        type="email"
+                        required
+                        name="email"
+                        placeholder="Email address"
+                        className={styles.input}
+                      />
+                    </div>
+                    <div className={styles.submit}>
+                      <input
+                        className={styles.button}
+                        type="submit"
+                        disabled={isSubmitting}
+                        value={isSubmitting ? "PLEASE WAIT" : "SUBSCRIBE"}
+                      />
+                      <p className={styles.consent}>
+                        We respect your privacy. Unsubscribe at any time.
+                      </p>
+                    </div>
+                  </form>
+                </div>
+              ) : (
+                <div className={styles.thankyou}>
+                  <div className={styles.icon}>
+                    <FaCheckCircle color="green" size={17} />
                   </div>
-                  <div className={styles.submit}>
-                    <input className={styles.button} type="submit" />
-                    <p className={styles.consent}>
-                      We respect your privacy. Unsubscribe at any time.
-                    </p>
+                  <div className={styles.message}>
+                    Thank you for your subscription
                   </div>
-                </form>
-              </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
-
-        <div key={data.slug}>
+        <>
+          {/* <div key={data.slug}>
           <div className={styles.item}>
             <div className={styles.imgFormat}></div>
             <div className={styles.rightItems}>
@@ -78,7 +114,8 @@ function Campaign({ data }) {
               </small>
             </div>
           </div>
-        </div>
+        </div> */}
+        </>
         <footer className={styles.footer}>
           <Link href="/">
             <a>Go back to List</a>
