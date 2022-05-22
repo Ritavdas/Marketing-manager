@@ -36,7 +36,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["cmbackendapi.herokuapp.com"]
 
 
 # Application definition
@@ -71,6 +71,7 @@ ROOT_URLCONF = 'cmbackend.urls'
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
+    "https://cm-next-js.herokuapp.com"
 ]
 
 TEMPLATES = [
@@ -101,6 +102,7 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+# Uncomment line below for heroku deployment / or comment for local deployment
 DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
 
 # Password validation
